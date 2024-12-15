@@ -56,7 +56,7 @@ export const PasswordProvider = ({ children }: PasswordProviderProps) => {
 
         const passwordData = createPasswordPreferencesObj()
 
-        const { data: password } = await (await fetch(
+        const { data: password, message } = await (await fetch(
             // process.env.NEXT_PUBLIC_API_URL + "/api/password/create",
             "http://localhost:3333/api/password/create",
             {
@@ -69,7 +69,7 @@ export const PasswordProvider = ({ children }: PasswordProviderProps) => {
         )).json()
 
         setPassword(password)
-        createToast("Password created successfully!", "✅")
+        createToast(message, "✅")
     }
 
     return (
