@@ -1,11 +1,13 @@
-import ActionButtons from "@/components/ActionButtons";
-import CreatePwdBtn from "@/components/CreatePwdBtn";
-import Header from "@/components/Header";
-import PasswordDisplay from "@/components/PasswordDisplay";
+import {
+  Header,
+  PasswordDisplay,
+  ActionButtons,
+  CreatePwdBtn
+} from "@/components"
 
-import { PasswordProvider } from "@/providers/PasswordProvider";
+import { PasswordProvider } from "@/providers/PasswordProvider"
 
-const Home: React.FC = async () => (
+const Home: React.FC = () => (
   <div className="flex flex-col h-screen gap-2 items-center justify-evenly bg-slate-950">
     <PasswordProvider>
       <Header />
@@ -16,6 +18,6 @@ const Home: React.FC = async () => (
       </div>
     </PasswordProvider>
   </div>
-);
+)
 
-export default Home;
+export default Home

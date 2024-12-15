@@ -1,18 +1,13 @@
 import { createContext } from "react"
 
-import { PwdContextProps } from "../types"
+import { PasswordContextProps } from "../types"
 
 export const initialValues = {
-    pwdData: {
-        length: "8",
-        symbols: false,
-        numbers: false,
-        capitalLetters: false,
-        smallLetters: false
-    },
     password: "",
-    handlePwdUserPreferences: () => {},
-    createPwd: () => {}
+    passwordLength: 0,
+    setPasswordLength: () => {},
+    createPwd: () => {},
+    handlePasswordPreferencesArray: () => {}
 }
 
-export const PasswordContext = createContext<PwdContextProps>(initialValues)
+export const PasswordContext = createContext<PasswordContextProps>(initialValues)

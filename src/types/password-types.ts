@@ -1,28 +1,33 @@
 import { ReactNode } from "react"
 
 // Password Types
-export type PwdProps = {
-    length: string,
+export type PasswordProps = {
     symbols: boolean,
     numbers: boolean,
     capitalLetters: boolean
     smallLetters: boolean
 }
 
-export type PwdPreferences = {
-    name: string,
-    content: boolean | string,
+export type PasswordPreferenceProps = {
+    preference: string,
+    isChecked: boolean
+}
+
+export type PasswordPreferencesObjData = {
+    length: number,
+    elements: string[]
 }
 
 // Context and Provider types
-export type PwdContextProps = {
-    pwdData: PwdProps,
-    handlePwdUserPreferences: ({ name, content }: PwdPreferences) => void,
+export type PasswordContextProps = {
     password: string
+    passwordLength: number,
+    setPasswordLength: (newlength: number) => void,
     createPwd: () => void,
+    handlePasswordPreferencesArray: (pwdPreferences: PasswordPreferenceProps) => void,
 }
 
-export type PwdProviderProps = {
+export type PasswordProviderProps = {
     children: ReactNode
 }
 

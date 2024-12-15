@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import { usePwd } from "../hooks/usePwd";
+import { usePwd } from "../hooks/usePwd"
 
-const CreatePwdBtn = () => {
-  const { createPwd } = usePwd();
+export const CreatePwdBtn = () => {
+
+  const { createPwd } = usePwd()
 
   return (
       <button
@@ -11,9 +12,7 @@ const CreatePwdBtn = () => {
         className="bg-violet-800 w-full p-4 rounded-2xl text-lg hover:bg-violet-900"
         onClick={createPwd}
       >
-        Create Password
+        GENERATE
       </button>
-  );
-};
-
-export default CreatePwdBtn;
+  )
+}

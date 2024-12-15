@@ -1,13 +1,14 @@
-"use client";
+"use client"
 
-import { usePwd } from "@/hooks/usePwd";
+import { usePwd } from "@/hooks/usePwd"
 
-import { BsFillClipboardFill } from "react-icons/bs";
-import { Toaster, toast } from "react-hot-toast";
+import { BsFillClipboardFill } from "react-icons/bs"
+import { Toaster, toast } from "react-hot-toast"
 
-import copy from "copy-to-clipboard";
+import copy from "copy-to-clipboard"
 
-const PasswordDisplay: React.FC = () => {
+export const PasswordDisplay: React.FC = () => {
+  
   const { password } = usePwd();
 
   const createToast = (message: string, emoji: string): void => {
@@ -18,17 +19,17 @@ const PasswordDisplay: React.FC = () => {
         background: "#333",
         color: "#fff",
       },
-    });
-  };
+    })
+  }
 
   const handleCopy = (): void | Boolean | string => {
     if (!password)
-      return createToast("There is no password to copy!", "❌");
+      return createToast("There is no password to copy!", "❌")
 
-    copy(password);
-    createToast("Copied to your clipboard!", "📋");
-    return;
-  };
+    copy(password)
+    createToast("Copied to your clipboard!", "📋")
+    return
+  }
 
   return (
     <section className="flex justify-between p-1 h-15 sm:h-28 w-64 sm:w-fit max-w-xl rounded-2xl bg-slate-900 sm:mt-10">
@@ -47,7 +48,5 @@ const PasswordDisplay: React.FC = () => {
       </button>
       <Toaster />
     </section>
-  );
-};
-
-export default PasswordDisplay;
+  )
+}

@@ -2,6 +2,6 @@
 
 import { useContext } from "react"
 
-import { PasswordContext } from "../contexts/PasswordContext";
+import { PasswordContext } from "@/contexts"
 
 export const usePwd = () => useContext(PasswordContext)

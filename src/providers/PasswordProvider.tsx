@@ -2,67 +2,85 @@
 
 import { useState } from "react"
 
-import { PasswordContext, initialValues } from "../contexts/PasswordContext"
+import { PasswordContext } from "../contexts/PasswordContext"
 
 import {
-  PwdProviderProps,
-  PwdProps,
-  PasswordApiResponse,
-  PwdPreferences,
+    PasswordProviderProps,
+    PasswordApiResponse,
+    PasswordPreferenceProps,
+    PasswordPreferencesObjData,
 } from "../types"
 
-export const PasswordProvider = ({ children }: PwdProviderProps) => {
-    const [pwdData, setPwdData] = useState<PwdProps>(initialValues.pwdData)
-    const [password, setPassword] = useState("")
+export const PasswordProvider = ({ children }: PasswordProviderProps) => {
 
-    const handlePwdUserPreferences = ({ name, content }: PwdPreferences): void => {
+    const [password, setPassword] = useState<string>("")
+    const [passwordLength, setPasswordLength] = useState<number>(8)
+    const [passwordPreferencesArrayData, setPasswordPreferencesArrayData] = useState<string[]>([])
 
-        let auxObject = initialValues.pwdData
+    const handlePasswordPreferencesArray = ({ preference, isChecked }: PasswordPreferenceProps): void => {
 
-        auxObject = Object.defineProperty(pwdData, name, { value: content })
-        setPwdData({ ...auxObject })
+        if(!isChecked) {
+            setPasswordPreferencesArrayData(prevPreferencesArr => [
+                ...prevPreferencesArr.filter(preferenceItem => preferenceItem !== preference)
+            ])
+            return
+        }
+
+        setPasswordPreferencesArrayData([
+            ...passwordPreferencesArrayData,
+            preference
+        ])
+        return
     }
 
-    const hasTrueValue = (): boolean => {
+    const hasAnyPreference = (): boolean => {
 
-        const values = Object.values(pwdData)
+        if(passwordPreferencesArrayData.length === 0)
+            return false
+        return true
+    }
 
-        for(let value of values) {
-            if(value === true)
-                return true
+    const createPasswordPreferencesObj = (): PasswordPreferencesObjData => {
+
+        return {
+            length: passwordLength,
+            elements: passwordPreferencesArrayData
         }
-        return false
     }
 
     const createPwd = async (): Promise<void | string> => {
-        
-        if(!hasTrueValue())
+
+        if(!hasAnyPreference())
             return alert("You cannot create a password without preferences! Please mark at least one checkbox!")
 
-        const pwdDataResponse = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/createPwd",
-        {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(pwdData),
-        }
-        )
-        const pwd: PasswordApiResponse = await pwdDataResponse.json()
-        setPassword(pwd.data)
+        const passwordData = createPasswordPreferencesObj()
+
+        const { data: password } = await (await fetch(
+            // process.env.NEXT_PUBLIC_API_URL + "/api/password/create",
+            "http://localhost:3333/api/password/create",
+            {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(passwordData),
+            }
+        )).json()
+
+        setPassword(password)
     }
 
     return (
         <PasswordContext.Provider
-        value={{
-            pwdData,
-            handlePwdUserPreferences,
+          value={{
             password,
             createPwd,
-        }}
+            passwordLength,
+            setPasswordLength,
+            handlePasswordPreferencesArray
+          }}
         >
-        {children}
+            { children }
         </PasswordContext.Provider>
     )
 }
