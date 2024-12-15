@@ -3,26 +3,17 @@
 import { usePwd } from "@/hooks/usePwd"
 
 import { BsFillClipboardFill } from "react-icons/bs"
-import { Toaster, toast } from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 
 import copy from "copy-to-clipboard"
+import { createToast } from "@/utils"
 
 export const PasswordDisplay: React.FC = () => {
   
   const { password } = usePwd();
 
-  const createToast = (message: string, emoji: string): void => {
-    toast(message, {
-      icon: emoji,
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    })
-  }
-
   const handleCopy = (): void | Boolean | string => {
+    
     if (!password)
       return createToast("There is no password to copy!", "❌")
 

@@ -10,6 +10,7 @@ import {
     PasswordPreferenceProps,
     PasswordPreferencesObjData,
 } from "../types"
+import { createToast } from "@/utils"
 
 export const PasswordProvider = ({ children }: PasswordProviderProps) => {
 
@@ -51,7 +52,7 @@ export const PasswordProvider = ({ children }: PasswordProviderProps) => {
     const createPwd = async (): Promise<void | string> => {
 
         if(!hasAnyPreference())
-            return alert("You cannot create a password without preferences! Please mark at least one checkbox!")
+            return createToast("Password options are empty!", "❌")
 
         const passwordData = createPasswordPreferencesObj()
 
@@ -68,6 +69,7 @@ export const PasswordProvider = ({ children }: PasswordProviderProps) => {
         )).json()
 
         setPassword(password)
+        createToast("Password created successfully!", "✅")
     }
 
     return (
